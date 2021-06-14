@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1623637111 source:d:\cpp trials\trials\catchtheball\main.cpp
+	"SFMl/Graphics.hpp"
+	<string>
+	<iostream>
+
