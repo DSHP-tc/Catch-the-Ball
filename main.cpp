@@ -14,6 +14,7 @@ private:
     void handlePlayerInput(sf::Keyboard::Key,bool);
     std::string toString(int);
     void reset();
+    void endGame();
 
 private:
     sf::RenderWindow myWin;
@@ -127,16 +128,19 @@ void Game::update(sf::Time dt)
         ballSpeed.y*=-1;
     if(ball.getPosition().y+30>600)
         {
-            gameOver=true;
-            ballSpeed.x*=0;
-            ballSpeed.y*=0;
+            endGame();
         }
 
 
-    if(ball.getGlobalBounds().intersects(pedal.getGlobalBounds()))
+    if(ball.getGlobalBounds().intersects(pedal.getGlobalBounds()) && gameOver==false)
         {
-            ballSpeed.y*=-1.2;
-            playerScore+=1;
+            if(ball.getPosition().y+15>pedal.getPosition().y)
+                endGame();
+            else
+            {
+                ballSpeed.y*=-1.2;
+                playerScore+=1;
+            }
         }
 
 
@@ -149,6 +153,13 @@ void Game::update(sf::Time dt)
 
     scoreText.setString("Score : "+toString(playerScore));
     pedal.move(movePedal*dt.asSeconds());
+}
+
+void Game::endGame()
+{
+    gameOver=true;
+    ballSpeed.x*=0;
+    ballSpeed.y*=0;
 }
 
 void Game::render()
